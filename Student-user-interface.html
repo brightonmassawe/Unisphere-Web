@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniSphere UCS - Student Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+
+            --bg-gradient: linear-gradient(135deg, #071930 0%, #0c2b52 50%, #0a2240 100%);
+            
+            --glass-card: rgba(255, 255, 255, 0.03);
+            --glass-sidebar: rgba(10, 34, 64, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-hover: rgba(255, 255, 255, 0.08);
+            --glass-item: rgba(255, 255, 255, 0.02);
+            
+            /* Neon Text Glow directly from your main title headings */
+            --neon-glow: 0 0 12px rgba(96, 181, 255, 0.7), 0 0 25px rgba(96, 181, 255, 0.4);
+            
+            /* Text colors */
+            --text-primary: #ffffff;
+            --text-secondary: #8da2bb;
+            --accent-neon-blue: #60b5ff;
+            
+            /* UI Status Indicators */
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-purple: #8b5cf6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- SIDEBAR (Frosted glass panel) --- */
+        .sidebar {
+            width: 240px;
+            background-color: var(--glass-sidebar);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 16px;
+            border-right: 1px solid var(--glass-border);
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .logo-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: var(--accent-neon-blue);
+            text-shadow: var(--neon-glow);
+        }
+
+        .logo-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item a:hover {
+            background-color: var(--glass-hover);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active a {
+            background-color: rgba(37, 99, 235, 0.2);
+            color: var(--accent-neon-blue);
+            border: 1px solid rgba(96, 181, 255, 0.3);
+            text-shadow: 0 0 8px rgba(96, 181, 255, 0.5);
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* --- HEADER BAR --- */
+        .header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 32px;
+            background-color: rgba(10, 34, 64, 0.2);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .search-container {
+            position: relative;
+            width: 400px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px 16px 10px 40px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            color: var(--text-primary);
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-container input:focus {
+            border-color: rgba(96, 181, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .search-container::before {
+            content: "🔍";
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: var(--color-danger);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .user-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(96, 181, 255, 0.2);
+            border: 1px solid var(--accent-neon-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--accent-neon-blue);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* --- DASHBOARD GRID LAYOUT --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            padding: 32px;
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* --- WELCOME CARD --- */
+        .welcome-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border-radius: 16px;
+            padding: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .welcome-text h1 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            text-shadow: var(--neon-glow);
+        }
+
+        .welcome-text p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            max-width: 440px;
+        }
+
+        .view-announcements {
+            color: var(--accent-neon-blue);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: text-shadow 0.2s;
+        }
+
+        .view-announcements:hover {
+            text-shadow: 0 0 8px rgba(96, 181, 255, 0.6);
+        }
+
+        .gpa-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 6px solid rgba(255, 255, 255, 0.05);
+            border-top-color: var(--accent-neon-blue);
+            border-right-color: var(--accent-neon-blue);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(10, 34, 64, 0.3);
+            box-shadow: 0 0 15px rgba(96, 181, 255, 0.15);
+        }
+
+        .gpa-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-shadow: var(--neon-glow);
+        }
+
+        .gpa-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- SECTION CONTAINERS --- */
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            letter-spacing: 0.5px;
+        }
+
+        .list-container {
+            background-color: var(--glass-card);
+            border-radius: 16px;
+            padding: 8px 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(4px);
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-details {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .item-icon-box {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .item-meta h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .item-meta p {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .item-info-right {
+            text-align: right;
+        }
+
+        .item-info-right .info-top {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-neon-blue);
+            margin-bottom: 4px;
+        }
+
+        .item-info-right .info-bottom {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* --- RIGHT COLUMN / TO-DO LIST --- */
+        .todo-card {
+            background-color: var(--glass-card);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(4px);
+        }
+
+        .todo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .todo-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px;
+            background-color: var(--glass-item);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-neon-blue);
+            border-top: 1px solid var(--glass-border);
+            border-right: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .todo-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .checkbox-round {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--glass-border);
+            border-radius: 50%;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .todo-item.checked {
+            opacity: 0.5;
+        }
+
+        .todo-item.checked .checkbox-round {
+            background-color: var(--color-success);
+            border-color: var(--color-success);
+        }
+
+        .todo-item.checked .todo-title {
+            text-decoration: line-through;
+        }
+
+        .todo-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .todo-code {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .todo-date {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .add-task-btn {
+            background: transparent;
+            color: var(--accent-neon-blue);
+            border: 1px solid var(--accent-neon-blue);
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            box-shadow: inset 0 0 0 0 rgba(96, 181, 255, 0.2);
+        }
+
+        .add-task-btn:hover {
+            background-color: rgba(96, 181, 255, 0.1);
+            box-shadow: var(--neon-glow);
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo-icon">🎓</div>
+            <div class="logo-title">UniSphere</div>
+            <div class="logo-subtitle">UCS</div>
+        </div>
+        <ul class="nav-links">
+            <li class="nav-item active"><a href="#">📊 Dashboard</a></li>
+            <li class="nav-item"><a href="#">💬 Messages</a></li>
+            <li class="nav-item"><a href="#">📢 Announcements</a></li>
+            <li class="nav-item"><a href="#">🔔 Notifications</a></li>
+            <li class="nav-item"><a href="#">📅 Timetable</a></li>
+            <li class="nav-item"><a href="#">📝 Assignments</a></li>
+            <li class="nav-item"><a href="#">📈 Results</a></li>
+            <li class="nav-item"><a href="#">👤 Profile</a></li>
+            <li class="nav-item"><a href="#">⚙️ Settings</a></li>
+        </ul>
+    </aside>
+
+    <main class="main-content">
+        
+        <header class="header-bar">
+            <div class="search-container">
+                <input type="text" placeholder="Search for messages, announcements, students, etc.">
+            </div>
+            <div class="header-actions">
+                <div class="notification-icon">
+                    🔔<span class="notification-badge"></span>
+                </div>
+                <div class="user-profile-header">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-info">
+                        <span class="user-name">Aisha Daffa</span>             
+                        <span class="user-role">Student</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            
+            <div class="left-column">
+                
+                <section class="welcome-card">
+                    <div class="welcome-text">
+                        <h1>Hello EgoChomzy 👋</h1>
+                        <p>Welcome to UniSphere University Communication System. Stay updated with your classes, announcements, messages and important notifications.</p>
+                        <a href="#" class="view-announcements">View all announcements &rarr;</a>
+                    </div>
+                    <div class="gpa-circle">
+                        <span class="gpa-value">4.1</span>
+                        <span class="gpa-label">Current GPA</span>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-title">Today's Classes</h2>
+                    <div class="list-container">
+                        <div class="list-item">
+                            <div class="item-details">
+                                <div class="item-icon-box">💻</div>
+                                <div class="item-meta">
+                                    <h4>System Analysis & Design</h4>
+                                    <p>08:00 - 10:00</p>
+                                </div>
+                            </div>
+                            <div class="item-info-right">
+                                <p class="info-top">Room: TH F </p>
+                                <p class="info-bottom">DR. Rose Tinabo </p>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="item-details">
+                                <div class="item-icon-box">🗄️</div>
+                                <div class="item-meta">
+                                    <h4>Database Systems</h4>
+                                    <p>11:00 - 13:00</p>
+                                </div>
+                            </div>
+                            <div class="item-info-right">
+                                <p class="info-top">Room: TH E </p>
+                                <p class="info-bottom">Mr. Siphy Sommers</p>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="item-details">
+                                <div class="item-icon-box">🌐</div>
+                                <div class="item-meta">
+                                    <h4>Computer Networks</h4>
+                                    <p>13:00 - 15:00</p>
+                                </div>
+                            </div>
+                            <div class="item-info-right">
+                                <p class="info-top">Room: 217 </p>
+                                <p class="info-bottom">Mr. Kwesigabo P. </p>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="item-details">
+                                <div class="item-icon-box">⚡</div>
+                                <div class="item-meta">
+                                    <h4>Web Development</h4>
+                                    <p>16:00 - 18:00</p>
+                                </div>
+                            </div>
+                            <div class="item-info-right">
+                                <p class="info-top">Room: Lab 7</p>
+                                <p class="info-bottom">Mr. Estern Woods</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="section-title">Upcoming Deadlines</h2>
+                    <div class="list-container">
+                        <div class="list-item">
+                            <div class="item-details">
+                                <div class="item-icon-box">📄</div>
+                                <div class="item-meta">
+                                    <h4>Database Assignment</h4>
+                                    <p>DBMS CSU07208 </p>
+                                </div>
+                            </div>
+                            <div class="item-info-right">
+                                <p class="info-top">05 June 2026</p>
+                                <p class="info-bottom">23:59</p>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="item-details">
+                                <div class="item-icon-box">📄</div>
+                                <div class="item-meta">
+                                    <h4>System Analysis and Design </h4>
+                                    <p>ASAD CSU07211 </p>
+                                </div>
+                            </div>
+                            <div class="item-info-right">
+                                <p class="info-top">22 May 2026</p>
+                                <p class="info-bottom">23:59</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="right-column">
+                <section class="todo-card">
+                    <div class="todo-header">
+                        <h2 class="section-title" style="margin:0;">To-do list</h2>
+                        <span>&rarr;</span>
+                    </div>
+                    
+                    <div class="todo-list">
+                        <div class="todo-item checked" style="border-left-color: var(--color-success);">
+                            <div class="todo-left">
+                                <div class="checkbox-round"></div>
+                                <div>
+                                    <div class="todo-title">Complete Database Assignment</div>
+                                    <div class="todo-code">DBMS CSU07208</div>
+                                </div>
+                            </div>
+                            <div class="todo-date">by 5 June 2026</div>
+                        </div>
+
+                        <div class="todo-item" style="border-left-color: var(--color-warning);">
+                            <div class="todo-left">
+                                <div class="checkbox-round"></div>
+                                <div>
+                                    <div class="todo-title">Prepare for Networks Quiz</div>
+                                    <div class="todo-code">CSU07209 </div>
+                                </div>
+                            </div>
+                            <div class="todo-date">by Tomorrow</div>
+                        </div>
+
+                        <div class="todo-item" style="border-left-color: var(--color-danger);">
+                            <div class="todo-left">
+                                <div class="checkbox-round"></div>
+                                <div>
+                                    <div class="todo-title">Read ASAD Lecture Notes</div>
+                                    <div class="todo-code">Chapter 4 & 5</div>
+                                </div>
+                            </div>
+                            <div class="todo-date">by Today</div>
+                        </div>
+                    </div>
+
+                    <button class="add-task-btn">Add new task</button>
+                </section>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>

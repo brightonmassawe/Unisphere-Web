@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>UniSphere - University Communication System</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body{
+      background: linear-gradient(to bottom right, #02142b, #043d75, #000814);
+      color:white;
+      min-height:100vh;
+    }
+
+    nav{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 50px;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+    }
+
+    nav h1{
+      color:#4fc3ff;
+      font-size:32px;
+      text-shadow:0 0 10px #4fc3ff;
+    }
+
+    nav ul{
+      display:flex;
+      list-style:none;
+      gap:25px;
+    }
+
+    nav ul li a{
+      text-decoration:none;
+      color:white;
+      transition:0.3s;
+    }
+
+    nav ul li a:hover{
+      color:#4fc3ff;
+    }
+
+    .hero{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:80px 60px;
+      flex-wrap:wrap;
+    }
+
+    .hero-text{
+      max-width:550px;
+    }
+
+    .hero-text h2{
+      font-size:55px;
+      margin-bottom:20px;
+      color:#4fc3ff;
+      text-shadow:0 0 15px #4fc3ff;
+    }
+
+    .hero-text p{
+      line-height:1.8;
+      font-size:18px;
+      margin-bottom:30px;
+    }
+
+    .btn{
+      padding:15px 30px;
+      border:none;
+      border-radius:30px;
+      background:#4fc3ff;
+      color:black;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .btn:hover{
+      background:white;
+      transform:scale(1.05);
+    }
+
+    .login-card{
+      width:350px;
+      background:rgba(255,255,255,0.08);
+      padding:35px;
+      border-radius:20px;
+      box-shadow:0 0 20px rgba(79,195,255,0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    .login-card h3{
+      text-align:center;
+      margin-bottom:25px;
+      color:#4fc3ff;
+    }
+
+    .input-box{
+      margin-bottom:20px;
+    }
+
+    .input-box label{
+      display:block;
+      margin-bottom:8px;
+    }
+
+    .input-box input,
+    .input-box select{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:10px;
+      outline:none;
+    }
+
+    .login-btn{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:10px;
+      background:#4fc3ff;
+      color:black;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .login-btn:hover{
+      background:white;
+    }
+
+    .features{
+      padding:60px 40px;
+      text-align:center;
+    }
+
+    .features h2{
+      margin-bottom:40px;
+      color:#4fc3ff;
+      font-size:40px;
+    }
+
+    .feature-container{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+      gap:25px;
+    }
+
+    .feature-box{
+      background:rgba(255,255,255,0.08);
+      padding:30px;
+      border-radius:20px;
+      transition:0.3s;
+      box-shadow:0 0 10px rgba(79,195,255,0.2);
+    }
+
+    .feature-box:hover{
+      transform:translateY(-10px);
+      box-shadow:0 0 20px rgba(79,195,255,0.5);
+    }
+
+    .feature-box h3{
+      color:#4fc3ff;
+      margin-bottom:15px;
+    }
+
+    footer{
+      text-align:center;
+      padding:20px;
+      background:rgba(0,0,0,0.4);
+      margin-top:40px;
+    }
+
+    @media(max-width:900px){
+      .hero{
+        flex-direction:column;
+        gap:40px;
+      }
+
+      .hero-text{
+        text-align:center;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <h1>UniSphere</h1>
+
+    <ul>
+      <li><a href=>Home</a></li>
+      <li><a href="#">Announcements</a></li>
+      <li><a href="#">Messages</a></li>
+      <li><a href="#">Notifications</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+
+    <div class="hero-text">
+      <h2>University Communication System</h2>
+
+      <p>
+        UniSphere is a modern University Communication System designed
+        to connect Students, Lecturers, HODs, and Administrators through
+        announcements, notifications, messaging, and SMS alerts in one platform.
+      </p>
+
+      <button class="btn">Explore System</button>
+    </div>
+
+    <div class="login-card">
+
+      <h3>User Login</h3>
+
+      <div class="input-box">
+        <label>Email</label>
+        <input type="email" id="email" required placeholder="Csgrp6@gmail.com">
+      </div>
+
+      <div class="input-box">
+        <label>Password</label>
+        <input type="password" id="password" required placeholder="Enter password">
+      </div>
+
+      <div class="input-box">
+        <label>Select Role</label>
+
+        <select id="role" required>
+          <option>Student</option>
+          <option>Lecturer</option>
+          <option>HOD</option>
+          <option>Administrator</option>
+        </select>
+      </div>
+
+      <button class="login-btn"onclick="verifyCredentials()">Login</button>
+
+    </div>
+
+<script>
+        function verifyCredentials()  {
+            event.preventDefault(); 
+            
+            var userEmail = document.getElementById("email").value;
+            var userPassword = document.getElementById("password").value;
+            var userRole = document.getElementById("role").value;
+            
+            if (userEmail === "Csgrp6@gmail.com" && userPassword === "123456789" && userRole === "Student") {
+                
+                window.location.href = "Student-user-interface.html"; 
+                
+            } else {
+                alert("Invalid email account, password match, or system role assignment!");
+            }
+        }
+    </script>
+
+  </section>
+
+  <section class="features">
+
+    <h2>System Features</h2>
+
+    <div class="feature-container">
+
+      <div class="feature-box">
+        <h3>Messaging</h3>
+        <p>
+          Send and receive messages between students,
+          lecturers, and administrators.
+        </p>
+      </div>
+
+      <div class="feature-box">
+        <h3>Announcements</h3>
+        <p>
+          View important university announcements and updates instantly.
+        </p>
+      </div>
+
+      <div class="feature-box">
+        <h3>SMS Alerts</h3>
+        <p>
+          Receive emergency alerts and OTP verification messages through SMS.
+        </p>
+      </div>
+
+      <div class="feature-box">
+        <h3>Notifications</h3>
+        <p>
+          Get real-time notifications about schedules,
+          events, and university activities.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <footer>
+    <p>© 2026 UniSphere - University Communication System @ all rights reserved</p>
+  </footer>
+
+</body>
+</html>

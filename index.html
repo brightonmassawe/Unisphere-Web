@@ -6,200 +6,236 @@
   <title>UniSphere - University Communication System</title>
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family: Arial, sans-serif;
-    }
+  *{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
 
-    body{
-      background: linear-gradient(to bottom right, #02142b, #043d75, #000814);
-      color:white;
-      min-height:100vh;
-    }
+body{
+  background: linear-gradient(to bottom right, #02142b, #043d75, #000814);
+  color:white;
+  min-height:100vh;
+  overflow-x: hidden;
+}
 
-    nav{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:20px 50px;
-      background: rgba(0,0,0,0.3);
-      backdrop-filter: blur(8px);
-    }
+nav{
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:20px 50px;
+  background: rgba(0,12,28,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
 
-    nav h1{
-      color:#4fc3ff;
-      font-size:32px;
-      text-shadow:0 0 10px #4fc3ff;
-    }
+nav h1{
+  color:#4fc3ff;
+  font-size:32px;
+  text-shadow:0 0 10px #4fc3ff;
+}
 
-    nav ul{
-      display:flex;
-      list-style:none;
-      gap:25px;
-    }
+nav ul{
+  display:flex;
+  list-style:none;
+  gap:25px;
+}
 
-    nav ul li a{
-      text-decoration:none;
-      color:white;
-      transition:0.3s;
-    }
+nav ul li a{
+  text-decoration:none;
+  color:white;
+  transition:0.3s;
+}
 
-    nav ul li a:hover{
-      color:#4fc3ff;
-    }
+nav ul li a:hover{
+  color:#4fc3ff;
+}
 
-    .hero{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:80px 60px;
-      flex-wrap:wrap;
-    }
+.hero{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:80px 60px;
+  flex-wrap:wrap;
+  gap: 40px;
+}
 
-    .hero-text{
-      max-width:550px;
-    }
+.hero-text{
+  flex: 1;
+  min-width: 280px;
+  max-width:550px;
+}
 
-    .hero-text h2{
-      font-size:55px;
-      margin-bottom:20px;
-      color:#4fc3ff;
-      text-shadow:0 0 15px #4fc3ff;
-    }
+.hero-text h2{
+  font-size:55px;
+  margin-bottom:20px;
+  color:#4fc3ff;
+  text-shadow:0 0 15px #4fc3ff;
+}
 
-    .hero-text p{
-      line-height:1.8;
-      font-size:18px;
-      margin-bottom:30px;
-    }
+.hero-text p{
+  line-height:1.8;
+  font-size:18px;
+  margin-bottom:30px;
+}
 
-    .btn{
-      padding:15px 30px;
-      border:none;
-      border-radius:30px;
-      background:#4fc3ff;
-      color:black;
-      font-weight:bold;
-      cursor:pointer;
-      transition:0.3s;
-    }
+.btn{
+  padding:15px 30px;
+  border:none;
+  border-radius:30px;
+  background:#4fc3ff;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-    .btn:hover{
-      background:white;
-      transform:scale(1.05);
-    }
+.btn:hover{
+  background:white;
+  transform:scale(1.05);
+}
 
-    .login-card{
-      width:350px;
-      background:rgba(255,255,255,0.08);
-      padding:35px;
-      border-radius:20px;
-      box-shadow:0 0 20px rgba(79,195,255,0.4);
-      backdrop-filter: blur(10px);
-    }
+.login-card{
+  width: 100%;
+  max-width:350px;
+  background:rgba(255,255,255,0.08);
+  padding:35px;
+  border-radius:20px;
+  box-shadow:0 0 20px rgba(79,195,255,0.4);
+  backdrop-filter: blur(10px);
+}
 
-    .login-card h3{
-      text-align:center;
-      margin-bottom:25px;
-      color:#4fc3ff;
-    }
+.login-card h3{
+  text-align:center;
+  margin-bottom:25px;
+  color:#4fc3ff;
+}
 
-    .input-box{
-      margin-bottom:20px;
-    }
+.input-box{
+  margin-bottom:20px;
+}
 
-    .input-box label{
-      display:block;
-      margin-bottom:8px;
-    }
+.input-box label{
+  display:block;
+  margin-bottom:8px;
+}
 
-    .input-box input,
-    .input-box select{
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:10px;
-      outline:none;
-    }
+.input-box input,
+.input-box select{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  outline:none;
+}
 
-    .login-btn{
-      width:100%;
-      padding:14px;
-      border:none;
-      border-radius:10px;
-      background:#4fc3ff;
-      color:black;
-      font-weight:bold;
-      cursor:pointer;
-      transition:0.3s;
-    }
+.login-btn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#4fc3ff;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.3s;
+}
 
-    .login-btn:hover{
-      background:white;
-    }
+.login-btn:hover{
+  background:white;
+}
 
-    .features{
-      padding:60px 40px;
-      text-align:center;
-    }
+.features{
+  padding:60px 40px;
+  text-align:center;
+}
 
-    .features h2{
-      margin-bottom:40px;
-      color:#4fc3ff;
-      font-size:40px;
-    }
+.features h2{
+  margin-bottom:40px;
+  color:#4fc3ff;
+  font-size:40px;
+}
 
-    .feature-container{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-      gap:25px;
-    }
+.feature-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+  gap:25px;
+}
 
-    .feature-box{
-      background:rgba(255,255,255,0.08);
-      padding:30px;
-      border-radius:20px;
-      transition:0.3s;
-      box-shadow:0 0 10px rgba(79,195,255,0.2);
-    }
+.feature-box{
+  background:rgba(255,255,255,0.08);
+  padding:30px;
+  border-radius:20px;
+  transition:0.3s;
+  box-shadow:0 0 10px rgba(79,195,255,0.2);
+}
 
-    .feature-box:hover{
-      transform:translateY(-10px);
-      box-shadow:0 0 20px rgba(79,195,255,0.5);
-    }
+.feature-box:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 20px rgba(79,195,255,0.5);
+}
 
-    .feature-box h3{
-      color:#4fc3ff;
-      margin-bottom:15px;
-    }
+.feature-box h3{
+  color:#4fc3ff;
+  margin-bottom:15px;
+}
 
-    footer{
-      text-align:center;
-      padding:20px;
-      background:rgba(0,0,0,0.4);
-      margin-top:40px;
-    }
+footer{
+  text-align:center;
+  padding:20px;
+  background:rgba(0,0,0,0.4);
+  margin-top:40px;
+}
 
-    @media(max-width:900px){
-      .hero{
-        flex-direction:column;
-        gap:40px;
-      }
+/* --- Mobile Responsiveness Adjustments --- */
+@media(max-width:900px){
+  nav{
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
 
-      .hero-text{
-        text-align:center;
-      }
-    }
+  nav ul{
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 14px;
+  }
 
+  .hero{
+    padding: 40px 20px;
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .hero-text{
+    max-width: 100%;
+  }
+
+  .hero-text h2{
+    font-size: 36px;
+  }
+
+  .features {
+    padding: 40px 20px;
+  }
+
+  .features h2 {
+    font-size: 30px;
+  }
+}
   </style>
 </head>
 
 <body>
 
   <nav>
-    <h1>UniSphere</h1>
+    <h1>🌐 UniSphere</h1>
 
     <ul>
       <li><a href=>Home</a></li>

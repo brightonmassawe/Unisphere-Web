@@ -6,7 +6,7 @@
     <title>UniSphere UCS - Student Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
+    :root {
 
             --bg-gradient: linear-gradient(135deg, #071930 0%, #0c2b52 50%, #0a2240 100%);
             
@@ -44,12 +44,35 @@
             color: var(--text-primary);
             display: flex;
             height: 100vh;
+            min-height: 100vh;
             overflow: hidden;
+            scrollbar-color: rgba(139, 92, 246, 0.8) rgba(10, 34, 64, 0.65);
+            scrollbar-width: thin;
+        }
+
+        *::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: rgba(10, 34, 64, 0.65);
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.8);
+            border: 2px solid rgba(10, 34, 64, 0.65);
+            border-radius: 999px;
+        }
+
+        *::-webkit-scrollbar-thumb:hover {
+            background: #a78bfa;
         }
 
         /* --- SIDEBAR (Frosted glass panel) --- */
         .sidebar {
             width: 240px;
+            flex: 0 0 240px;
             background-color: var(--glass-sidebar);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
@@ -57,6 +80,13 @@
             flex-direction: column;
             padding: 24px 16px;
             border-right: 1px solid var(--glass-border);
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            display: none;
         }
 
         .logo-container {
@@ -123,6 +153,8 @@
         /* --- MAIN CONTAINER --- */
         .main-content {
             flex: 1;
+            min-width: 0;
+            min-height: 0;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
@@ -130,12 +162,16 @@
 
         /* --- HEADER BAR --- */
         .header-bar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 16px 32px;
-            background-color: rgba(10, 34, 64, 0.2);
+            background-color: rgba(10, 34, 64, 0.9);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--glass-border);
         }
 
@@ -230,7 +266,7 @@
         /* --- DASHBOARD GRID LAYOUT --- */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
             gap: 24px;
             padding: 32px;
         }
@@ -491,6 +527,232 @@
             background-color: rgba(96, 181, 255, 0.1);
             box-shadow: var(--neon-glow);
         }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
+                min-height: 0;
+                overflow: hidden;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex: 0 0 auto;
+                padding: 12px 16px 8px;
+                border-right: 0;
+                border-bottom: 1px solid var(--glass-border);
+                overflow: visible;
+            }
+
+            .logo-container {
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 8px;
+                margin-bottom: 12px;
+                text-align: left;
+            }
+
+            .logo-icon {
+                margin-bottom: 0;
+                font-size: 24px;
+            }
+
+            .logo-title {
+                font-size: 18px;
+            }
+
+            .logo-subtitle {
+                margin: 0 0 0 2px;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                gap: 8px;
+                overflow-x: auto;
+                padding-bottom: 4px;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .nav-links::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav-item {
+                flex: 0 0 auto;
+            }
+
+            .nav-item a {
+                white-space: nowrap;
+                padding: 10px 12px;
+            }
+
+            .main-content {
+                flex: 1;
+                min-height: 0;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            .header-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+                padding: 16px 24px;
+            }
+
+            .header-actions {
+                order: 1;
+                justify-content: flex-end;
+            }
+
+            .search-container {
+                order: 2;
+                width: 100%;
+            }
+
+            .header-actions {
+                gap: 16px;
+            }
+
+            .dashboard-grid {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .header-bar {
+                flex-wrap: wrap;
+                padding: 14px 16px;
+            }
+
+            .search-container {
+                width: 100%;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .dashboard-grid {
+                gap: 20px;
+                padding: 20px 16px;
+            }
+
+            .welcome-card {
+                align-items: flex-start;
+                gap: 20px;
+                padding: 24px;
+            }
+
+            .welcome-text {
+                min-width: 0;
+            }
+
+            .welcome-text h1 {
+                font-size: 24px;
+            }
+
+            .gpa-circle {
+                width: 112px;
+                height: 112px;
+            }
+
+            .gpa-value {
+                font-size: 28px;
+            }
+
+            .list-container {
+                padding: 4px 16px;
+            }
+
+            .list-item {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .item-details {
+                min-width: 0;
+                gap: 12px;
+            }
+
+            .item-meta {
+                min-width: 0;
+            }
+
+            .item-meta h4 {
+                overflow-wrap: anywhere;
+            }
+
+            .item-info-right {
+                margin-left: 52px;
+                text-align: left;
+            }
+
+            .todo-card {
+                padding: 20px 16px;
+            }
+
+            .todo-item {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .todo-left {
+                min-width: 0;
+            }
+
+            .todo-title {
+                overflow-wrap: anywhere;
+            }
+
+            .todo-date {
+                margin-left: 30px;
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .sidebar {
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+
+            .header-bar {
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+
+            .dashboard-grid {
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+
+            .welcome-card {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .gpa-circle {
+                align-self: flex-end;
+            }
+
+            .todo-card {
+                padding-right: 12px;
+                padding-left: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -525,9 +787,9 @@
                     🔔<span class="notification-badge"></span>
                 </div>
                 <div class="user-profile-header">
-                    <div class="user-avatar">AD</div>
+                    <div class="user-avatar">EC</div>
                     <div class="user-info">
-                        <span class="user-name">Aisha Daffa</span>             
+                        <span class="user-name">Ego Chomzy</span>             
                         <span class="user-role">Student</span>
                     </div>
                 </div>
@@ -540,7 +802,7 @@
                 
                 <section class="welcome-card">
                     <div class="welcome-text">
-                        <h1>Hello EgoChomzy 👋</h1>
+                        <h1>Hello Ego Chomzy 👋</h1>
                         <p>Welcome to UniSphere University Communication System. Stay updated with your classes, announcements, messages and important notifications.</p>
                         <a href="#" class="view-announcements">View all announcements &rarr;</a>
                     </div>
